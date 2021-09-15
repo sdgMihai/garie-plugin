@@ -104,6 +104,7 @@ async function getCurrentRetries(influx, waitingTimestamp, statusLogsRows, datab
 
 async function makeStatusTables(res, influx, database) {
   let obj = {};
+  console('-------------makeStatusTables--------------');
   try {
     obj = await makeStatusTablesHelper(influx, database);
   } catch(err) {
