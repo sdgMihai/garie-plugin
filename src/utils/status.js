@@ -160,22 +160,23 @@ async function makeStatusTablesHelper(influx, database) {
 
   const currentlyRunningChecksTable = await getCurrentChecks(influx, waitingTimestamp, startTimestamp, database);
   const currentlyRunningRetriesTable = await getCurrentRetries(influx, waitingTimestamp, statusLogsRows.slice(2), database);
+  console.log('----------- makeStatusTablesHelper ----------'); 
 
   if (statusLogsRows[statusLogsRows.length - 1].step === "START" ||
       statusLogsRows[statusLogsRows.length - 1].step === "WAITING") {
-
+    console.log('-----------------------START or WAITING');
     tablesToShow.first = true;
     return {nrUrls, currentlyRunningChecksTable, tablesToShow, database };
       
   } else if (statusLogsRows[statusLogsRows.length - 1].step.includes("RETRY") && 
     currentlyRunningRetriesTable.retries.length > 0 && currentlyRunningRetriesTable.retries[0].duration !== '0.00') {
-    
+    console.log('----------------retry');
     tablesToShow.first = true;
     tablesToShow.retries = true;
     return { nrUrls, currentlyRunningChecksTable, currentlyRunningRetriesTable, tablesToShow, database };
 
   } else if (statusLogsRows[statusLogsRows.length - 1].step === "FINISHED") {
-    
+    console.log('-----------------------finished');
     const finishTime = statusLogsRows[statusLogsRows.length - 1].time.getNanoTime();
     const totalRunningTime = ((finishTime - startTimestamp) / TIME_IN_SECONDS).toFixed(2);
     
