@@ -83,6 +83,7 @@ const getDataForAllUrls = async(options) => {
                 await influx.savePoints(options.influx, [pointStatusLogs, pointUrls], "START");
     } catch(err) {
         console.log(`Failed to START and add number of all urls ${err}`);
+        resolve();
     }
 
     let retries = 0;

@@ -162,14 +162,14 @@
                         {% if countSuccess > nrUrls %}
                             {{ nrUrls }} / {{ nrUrls }}
                         {% else %}
-                            {{ countSuccess }} / {{ nrUrls }}
+                            {{ nrUrls - currentlyRunningRetriesTable.retries[2].failedUrls.size }} / {{ nrUrls }}
                         {% endif %}
                     </td>
                     <td>
                         {% if countSuccess > nrUrls %}
                             0 / {{ nrUrls }}
                         {% else %}
-                            {{ nrUrls - countSuccess }} / {{ nrUrls }}
+                            {{ currentlyRunningRetriesTable.retries[2].failedUrls.size }} / {{ nrUrls }}
                         {% endif %}
                     </td>
             </tbody>
