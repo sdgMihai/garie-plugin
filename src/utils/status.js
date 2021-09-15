@@ -115,6 +115,7 @@ async function makeStatusTables(res, influx, database) {
 }
 
 async function makeStatusTablesHelper(influx, database) {
+  console.log('----------- makeStatusTablesHelper ----------'); 
   const defaultMessage = "Plugin has not started yet.";
   summaryStatus[database] = {success : 0, allUrls : 0, lastRun: '-'};
 
@@ -160,7 +161,11 @@ async function makeStatusTablesHelper(influx, database) {
 
   const currentlyRunningChecksTable = await getCurrentChecks(influx, waitingTimestamp, startTimestamp, database);
   const currentlyRunningRetriesTable = await getCurrentRetries(influx, waitingTimestamp, statusLogsRows.slice(2), database);
-  console.log('----------- makeStatusTablesHelper ----------'); 
+  console.log('-------------------------currentlyRunningChecksTable---------------------');
+  console.log(currentlyRunningChecksTable);
+  console.log('-------------------------currentlyRunningRetriesTable---------------------');
+  console.log(currentlyRunningRetriesTable);
+
 
   if (statusLogsRows[statusLogsRows.length - 1].step === "START" ||
       statusLogsRows[statusLogsRows.length - 1].step === "WAITING") {
