@@ -195,6 +195,10 @@ async function makeStatusTablesHelper(influx, database) {
     }
 
     const countSuccess = successful.length;
+    if (countSuccess > nrUrls || currentlyRunningRetriesTable.retries[2].failedUrls.size != nrUrls - countSuccess) {
+      const errorMessage = "Plugin must rerun. Success counting error occurred.";
+      return {errorMessage, database};
+    }
     summaryStatus[database].success = countSuccess;
     
     tablesToShow.first = true;

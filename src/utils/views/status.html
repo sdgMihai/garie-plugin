@@ -159,18 +159,10 @@
                         {{ moment(Date.parse(startTime) + (totalRunningTime * 1000)).tz(timez).format('MMMM Do YYYY, h:mm:ss a') }}
                     </td>
                     <td>
-                        {% if countSuccess > nrUrls %}
-                            {{ nrUrls }} / {{ nrUrls }}
-                        {% else %}
-                            {{ nrUrls - currentlyRunningRetriesTable.retries[2].failedUrls.size }} / {{ nrUrls }}
-                        {% endif %}
+                        {{ countSuccess }} / {{ nrUrls }}
                     </td>
                     <td>
-                        {% if countSuccess > nrUrls %}
-                            0 / {{ nrUrls }}
-                        {% else %}
-                            {{ currentlyRunningRetriesTable.retries[2].failedUrls.size }} / {{ nrUrls }}
-                        {% endif %}
+                        {{ nrUrls - countSuccess }} / {{ nrUrls }}
                     </td>
             </tbody>
         </table>
