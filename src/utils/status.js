@@ -195,10 +195,6 @@ async function makeStatusTablesHelper(influx, database) {
     }
 
     const countSuccess = successful.length;
-    if (countSuccess > nrUrls || currentlyRunningRetriesTable.retries[2].failedUrls.size != nrUrls - countSuccess) {
-      const errorMessage = "Plugin must rerun. Success counting error occurred.";
-      return {errorMessage, database};
-    }
     summaryStatus[database].success = countSuccess;
     
     tablesToShow.first = true;
@@ -207,6 +203,13 @@ async function makeStatusTablesHelper(influx, database) {
     }
     tablesToShow.finish = true;
     summaryStatus[database].success = countSuccess;
+    
+    if (!countSuccess || !nrUrls || !currentlyRunningRetriesTable
+	    || countSuccess > nrUrls
+	    || currentlyRunningRetriesTable.retries[2].failedUrls.size != nrUrls - countSuccess) {
+      const defaultMessage = "${database} plugin has unexpectedly failed. Please rerun it.";
+      return {defaultMessage, nrUrls, currentlyRunningChecksTable, currentlyRunningRetriesTable, startTime, totalRunningTime, countSuccess, tablesToShow, database};
+    }
     return {nrUrls, currentlyRunningChecksTable, currentlyRunningRetriesTable, startTime, totalRunningTime, countSuccess, tablesToShow, database };
   }
   return {defaultMessage, database};
